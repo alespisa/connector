@@ -1,0 +1,4 @@
+scout/scout.ui.html/node_modules/*
+dist/*
+test-results/*
+scout/node_modules/*
