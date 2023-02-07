@@ -9,6 +9,7 @@ import org.eclipse.scout.rt.platform.text.TEXTS;
 
 import org.eclipse.scout.scout.client.api.ApiPage;
 import org.eclipse.scout.scout.client.helloworld.HelloWorldPage;
+import org.eclipse.scout.scout.client.parameter.ParameterPage;
 import org.eclipse.scout.scout.shared.Icons;
 
 /**
@@ -22,6 +23,7 @@ public class WorkOutline extends AbstractOutline {
     super.execCreateChildPages(pageList);
     pageList.add(new HelloWorldPage());
     pageList.add(new ApiPage());
+    pageList.add(new ParameterPage());
   }
 
   @Override
