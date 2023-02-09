@@ -73,7 +73,9 @@ public class ParameterForm extends AbstractForm {
         }
       }
 
-      public class DataTapeSmartField extends AbstractSmartField{
+
+      //TODO API: Corrupt
+/*      public class DataTapeSmartField extends AbstractSmartField{
 
         @Override
         protected String getConfiguredLabel() {
@@ -84,7 +86,7 @@ public class ParameterForm extends AbstractForm {
         protected Class<? extends ICodeType> getConfiguredCodeType() {
           return DatatypeCodeType.class;
         }
-      }
+      }*/
 
     }
   }

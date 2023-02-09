@@ -8,7 +8,7 @@ public class ApiService implements IApiService {
   @Override
   public ApiFormData load(ApiFormData input) {
     StringBuilder msg = new StringBuilder();
-    if (input.getMessageBox().getValue().isEmpty()){
+    if (!input.getMessageBox().getValue().isEmpty()){
       msg.append("Hello ").append(ServerSession.get().getUserId()).append('!').append(" This is youre Message: ").append(input.getMessageBox().getValue());
     } else {
       msg.append("Hello ").append(ServerSession.get().getUserId()).append('!');

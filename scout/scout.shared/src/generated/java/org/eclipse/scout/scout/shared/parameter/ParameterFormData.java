@@ -13,16 +13,8 @@ import javax.annotation.Generated;
 public class ParameterFormData extends AbstractFormData {
     private static final long serialVersionUID = 1L;
 
-    public DataTapeSmart getDataTapeSmart() {
-        return getFieldByClass(DataTapeSmart.class);
-    }
-
     public Path getPath() {
         return getFieldByClass(Path.class);
-    }
-
-    public static class DataTapeSmart extends AbstractValueFieldData {
-        private static final long serialVersionUID = 1L;
     }
 
     public static class Path extends AbstractValueFieldData<String> {
