@@ -1,9 +1,12 @@
-package org.eclipse.scout.scout.server.rest;
+package org.eclipse.scout.scout.server.connector;
 
 import org.eclipse.scout.rt.platform.BEANS;
-import org.eclipse.scout.rt.platform.text.TEXTS;
 import org.eclipse.scout.rt.rest.IRestResource;
-import javax.ws.rs.*;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @Path("example")
