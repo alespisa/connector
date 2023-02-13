@@ -1,5 +1,6 @@
 package org.eclipse.scout.scout.server.interfaces.rest.consumer;
 
+import org.eclipse.scout.rt.platform.ApplicationScoped;
 import org.eclipse.scout.rt.platform.holders.NVPair;
 import org.eclipse.scout.rt.platform.util.Assertions;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.WriterInterceptorContext;
 import java.util.List;
 
+@ApplicationScoped
 public abstract class AbstractRestInterface {
 
   public static Logger LOG = LoggerFactory.getLogger(AbstractRestInterface.class);

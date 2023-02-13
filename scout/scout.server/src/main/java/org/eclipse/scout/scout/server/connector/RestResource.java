@@ -2,6 +2,7 @@ package org.eclipse.scout.scout.server.connector;
 
 import org.eclipse.scout.rt.platform.BEANS;
 import org.eclipse.scout.rt.rest.IRestResource;
+import org.eclipse.scout.scout.server.rest.ExampleEntityDo;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

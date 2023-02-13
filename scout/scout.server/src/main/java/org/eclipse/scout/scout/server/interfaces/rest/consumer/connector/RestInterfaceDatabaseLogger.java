@@ -7,7 +7,9 @@ public class RestInterfaceDatabaseLogger implements IRestInterfaceLogger{
 
   @Override
   public Long logRequest(String endpoint, Date evtRequest, String request) {
-    return null;
+    long looong = 21;
+      System.out.print(endpoint + evtRequest + request);
+      return looong;
   }
 
   @Override

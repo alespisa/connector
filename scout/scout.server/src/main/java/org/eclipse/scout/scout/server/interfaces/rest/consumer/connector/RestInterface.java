@@ -10,7 +10,12 @@ import java.util.Date;
 public class RestInterface extends AbstractRestInterface implements IRestInterface {
 
   private String m_endpoint = "";
-  private IRestInterfaceLogger m_logger = new RestInterface();
+  private String m_jwtToken = null;
+  private IRestInterfaceLogger m_logger = new RestInterfaceDatabaseLogger();
+
+  public void setLogger(IRestInterfaceLogger logger) {
+    m_logger = logger;
+  }
 
   @Override
   public String printInServer(String text) {

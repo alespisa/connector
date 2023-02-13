@@ -1,0 +1,9 @@
+docker run
+--name connector
+-e POSTGRES_PASSWORD=admin
+-p 5432:5432
+-v connector_data:/var/lib/postgresql/data/
+-v connector-tablespaces-volume:/var/lib/postgresql/tablespace
+--restart unless-stopped
+-d postgres
+-c "shared_buffers=256MB" -c "max_locks_per_transaction=512"
