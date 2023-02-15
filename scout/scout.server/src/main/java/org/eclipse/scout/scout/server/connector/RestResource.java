@@ -2,7 +2,7 @@ package org.eclipse.scout.scout.server.connector;
 
 import org.eclipse.scout.rt.platform.BEANS;
 import org.eclipse.scout.rt.rest.IRestResource;
-import org.eclipse.scout.scout.server.rest.ExampleEntityDo;
+import org.eclipse.scout.scout.rest.ExampleEntityDo;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -32,10 +32,11 @@ public class RestResource implements IRestResource {
 
   @GET
   @Path("{id}")
-  @Produces(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.TEXT_PLAIN)
   public ExampleEntityDo getApiStringMethod(@PathParam("id") String id){
+    System.out.print("id");
     return BEANS.get(ExampleEntityDo.class)
-      .withTest("djds");
+      .withTest("id");
   }
 
 }

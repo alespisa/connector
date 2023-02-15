@@ -3,6 +3,7 @@ package org.eclipse.scout.scout.server.api;
 import org.eclipse.scout.scout.server.ServerSession;
 import org.eclipse.scout.scout.shared.api.ApiFormData;
 import org.eclipse.scout.scout.shared.api.IApiService;
+import org.eclipse.scout.scout.shared.table.TableTablePageData;
 
 public class ApiService implements IApiService {
   @Override
@@ -14,6 +15,14 @@ public class ApiService implements IApiService {
       msg.append("Hello ").append(ServerSession.get().getUserId()).append('!');
     }
     input.getMessageValueString().setValue(msg.toString());
+
+    return input;
+  }
+
+  @Override
+  public TableTablePageData load(TableTablePageData input) {
+
+    //TODO api QDL!
 
     return input;
   }

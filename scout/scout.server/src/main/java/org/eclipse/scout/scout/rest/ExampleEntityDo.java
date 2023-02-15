@@ -1,14 +1,11 @@
-package org.eclipse.scout.scout.server.rest;
+package org.eclipse.scout.scout.rest;
 
 import org.eclipse.scout.rt.dataobject.DoEntity;
 import org.eclipse.scout.rt.dataobject.DoValue;
 import org.eclipse.scout.rt.dataobject.TypeName;
-import org.eclipse.scout.rt.dataobject.TypeVersion;
-import org.eclipse.scout.scout.server.ScoutTypeVerions;
 
 import javax.annotation.Generated;
 
-@TypeVersion(ScoutTypeVerions.Scout23.class)
 @TypeName("server.ExampleEntity")
 public class ExampleEntityDo extends DoEntity {
 

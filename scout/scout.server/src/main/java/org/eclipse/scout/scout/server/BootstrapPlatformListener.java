@@ -1,5 +1,6 @@
 package org.eclipse.scout.scout.server;
 
+import org.eclipse.scout.rt.platform.BEANS;
 import org.eclipse.scout.rt.platform.IPlatform;
 import org.eclipse.scout.rt.platform.IPlatformListener;
 import org.eclipse.scout.rt.platform.PlatformEvent;
@@ -7,6 +8,7 @@ import org.eclipse.scout.rt.platform.security.SimplePrincipal;
 import org.eclipse.scout.rt.platform.transaction.TransactionScope;
 import org.eclipse.scout.rt.server.context.ServerRunContext;
 import org.eclipse.scout.rt.server.context.ServerRunContexts;
+import org.eclipse.scout.scout.server.sql.PostgresSqlService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +37,7 @@ public class BootstrapPlatformListener implements IPlatformListener {
         public Boolean call() throws Exception {
           //FIXME: scout test setup is currently not configured to run with a db - db-migration-execution is prevented by this
           if(!event.getSource().getClass().getSimpleName().equals("GlobalTestingPlatform")) {
-//            bootstrap();
+            bootstrap();
           }
           return true;
         }
@@ -43,23 +45,23 @@ public class BootstrapPlatformListener implements IPlatformListener {
     }
   }
 
-/*  private void bootstrap() {
+  private void bootstrap() {
     // preload postgres service to have log messages in right order
     BEANS.get(PostgresSqlService.class);
 
-    ConsistencyCheck.runConsistencyCheck();
+/*    ConsistencyCheck.runConsistencyCheck();
     if (BooleanUtility.nvl(CONFIG.getPropertyValue(RunMigrationProperty.class), true)) {
       DbMigration.runDbMigration();
-    }
-    else {
+    }*/
+/*    else {*/
       LOGGER.info("Skipping DB Migration - The property 'com.bsivet.database.runmigration' is set to 'false'");
-    }
+/*    }*/
 
-    BEANS.get(EntityCache.class).clearAll();
-    scheduleJobs();
+/*    BEANS.get(EntityCache.class).clearAll();*/
+/*    scheduleJobs();*/
   }
 
-  private void scheduleJobs() {
+/*  private void scheduleJobs() {
     LOGGER.info("IsAbvJob and DayliAccountsJobs are scheduled");
 
     Jobs.schedule(new IsAbvJob(),
