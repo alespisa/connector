@@ -4,17 +4,26 @@ import org.eclipse.scout.rt.client.dto.PageData;
 import org.eclipse.scout.rt.client.ui.basic.table.AbstractTable;
 import org.eclipse.scout.rt.client.ui.basic.table.columns.AbstractLongColumn;
 import org.eclipse.scout.rt.client.ui.desktop.outline.pages.AbstractPageWithTable;
+import org.eclipse.scout.rt.platform.BEANS;
 import org.eclipse.scout.rt.platform.Order;
+import org.eclipse.scout.rt.platform.exception.ProcessingException;
 import org.eclipse.scout.rt.shared.services.common.jdbc.SearchFilter;
 import org.eclipse.scout.scout.shared.Icons;
+import org.eclipse.scout.scout.shared.table.ITablePageService;
 import org.eclipse.scout.scout.shared.table.TableTablePageData;
 
 @PageData(value = TableTablePageData.class)
 public class TableTablePage extends AbstractPageWithTable {
 
   @Override
-  protected void execLoadData(SearchFilter filter) {
-    super.execLoadData(filter);
+  protected void execLoadData(SearchFilter filter) throws ProcessingException {
+    TableTablePageData pageData = null;
+    try {
+      pageData = BEANS.get(ITablePageService.class).getTablePageData();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    importPageData(pageData);
   }
 
   public class Table extends AbstractTable{
@@ -23,12 +32,20 @@ public class TableTablePage extends AbstractPageWithTable {
       return Icons.AppLogo;
     }
 
-    public AnimalNrColumn getAnimalNrColumn(){
-      return getColumnSet().getColumnByClass(AnimalNrColumn.class);
+    public IdNrColumn getIdNrColumn(){
+      return getColumnSet().getColumnByClass(IdNrColumn.class);
+    }
+
+    public NameColumn getNameColumn(){
+      return getColumnSet().getColumnByClass(NameColumn.class);
+    }
+
+    public SurnameColumn getSurnameColumn(){
+      return getColumnSet().getColumnByClass(SurnameColumn.class);
     }
 
     @Order(10.0)
-    public class AnimalNrColumn extends AbstractLongColumn {
+    public class IdNrColumn extends AbstractLongColumn {
       @Override
       protected boolean getConfiguredDisplayable() {
         return true;
@@ -39,6 +56,33 @@ public class TableTablePage extends AbstractPageWithTable {
         return true;
       }
     }
+
+    @Order(10.0)
+    public class NameColumn extends AbstractLongColumn {
+      @Override
+      protected boolean getConfiguredDisplayable() {
+        return true;
+      }
+
+      @Override
+      protected boolean getConfiguredPrimaryKey() {
+        return true;
+      }
+    }
+
+    @Order(10.0)
+    public class SurnameColumn extends AbstractLongColumn {
+      @Override
+      protected boolean getConfiguredDisplayable() {
+        return true;
+      }
+
+      @Override
+      protected boolean getConfiguredPrimaryKey() {
+        return true;
+      }
+    }
+
   }
 
 }

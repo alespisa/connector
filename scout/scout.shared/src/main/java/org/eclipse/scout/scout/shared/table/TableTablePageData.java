@@ -49,15 +49,35 @@ public class TableTablePageData extends AbstractTablePageData {
 
     public static class TableTableRowData extends AbstractTableRowData {
         private static final long serialVersionUID = 1L;
-        public static final String animalNr = "animalNr";
-        private Long m_animalNr;
+        public static final String idNr = "idNr";
+        public static final String name = "name";
+        public static final String surname = "surname";
+        private Long m_idNr;
+        private Long m_name;
+        private Long m_surname;
 
-        public Long getAnimalNr() {
-            return m_animalNr;
+        public Long getIdNr() {
+            return m_idNr;
         }
 
-        public void setAnimalNr(Long newAnimalNr) {
-            m_animalNr = newAnimalNr;
+        public void setIdNr(Long newIdNr) {
+            m_idNr = newIdNr;
+        }
+
+        public Long getName() {
+            return m_name;
+        }
+
+        public void setName(Long newName) {
+            m_name = newName;
+        }
+
+        public Long getSurname() {
+            return m_surname;
+        }
+
+        public void setSurname(Long newSurname) {
+            m_surname = newSurname;
         }
     }
 }
