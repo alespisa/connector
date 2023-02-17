@@ -52,9 +52,11 @@ public class TableTablePageData extends AbstractTablePageData {
         public static final String idNr = "idNr";
         public static final String name = "name";
         public static final String surname = "surname";
+        public static final String age = "age";
         private Long m_idNr;
-        private Long m_name;
-        private Long m_surname;
+        private String m_name;
+        private String m_surname;
+        private Long m_age;
 
         public Long getIdNr() {
             return m_idNr;
@@ -64,20 +66,28 @@ public class TableTablePageData extends AbstractTablePageData {
             m_idNr = newIdNr;
         }
 
-        public Long getName() {
+        public String getName() {
             return m_name;
         }
 
-        public void setName(Long newName) {
+        public void setName(String newName) {
             m_name = newName;
         }
 
-        public Long getSurname() {
+        public String getSurname() {
             return m_surname;
         }
 
-        public void setSurname(Long newSurname) {
+        public void setSurname(String newSurname) {
             m_surname = newSurname;
+        }
+
+        public Long getAge() {
+            return m_age;
+        }
+
+        public void setAge(Long newAge) {
+            m_age = newAge;
         }
     }
 }

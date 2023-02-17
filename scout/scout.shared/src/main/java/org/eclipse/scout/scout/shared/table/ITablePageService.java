@@ -8,4 +8,6 @@ public interface ITablePageService extends IService {
 
   TableTablePageData getTablePageData() throws Exception;
 
+  long getMaxRowCount();
+
 }
