@@ -3,8 +3,10 @@ package org.eclipse.scout.scout.shared.parameter;
 import org.eclipse.scout.rt.platform.BEANS;
 import org.eclipse.scout.rt.platform.exception.ProcessingException;
 import org.eclipse.scout.rt.shared.services.common.code.ICodeType;
+import org.eclipse.scout.scout.shared.code.ParameterTypeCodeType;
+import org.eclipse.scout.scout.shared.parameter.IParameterService;
 
-public class AbstractSmartParameter extends AbstractParameter<Long>{
+public abstract class AbstractSmartParameter extends AbstractParameter<Long>{
 
   private static final long serialVersionUID = 1L;
 

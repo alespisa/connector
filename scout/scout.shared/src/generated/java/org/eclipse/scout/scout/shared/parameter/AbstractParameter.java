@@ -1,11 +1,13 @@
 package org.eclipse.scout.scout.shared.parameter;
 
+import org.eclipse.scout.rt.platform.Bean;
 import org.eclipse.scout.rt.platform.exception.ProcessingException;
 import org.eclipse.scout.rt.security.ACCESS;
 
 import java.io.Serializable;
 import java.security.Permission;
 
+@Bean
 public abstract class AbstractParameter<T> implements IParameter<T>, Serializable {
 
   private static final long serialVersionUID = 1L;

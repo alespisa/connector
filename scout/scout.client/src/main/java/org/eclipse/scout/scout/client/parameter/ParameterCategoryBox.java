@@ -1,11 +1,23 @@
 package org.eclipse.scout.scout.client.parameter;
 
+import org.eclipse.scout.rt.client.ui.action.menu.AbstractMenu;
+import org.eclipse.scout.rt.client.ui.action.menu.IMenu;
+import org.eclipse.scout.rt.client.ui.action.menu.IMenuType;
 import org.eclipse.scout.rt.client.ui.basic.table.AbstractTable;
 import org.eclipse.scout.rt.client.ui.basic.table.columns.AbstractLongColumn;
+import org.eclipse.scout.rt.client.ui.basic.table.columns.AbstractSmartColumn;
 import org.eclipse.scout.rt.client.ui.basic.table.columns.AbstractStringColumn;
 import org.eclipse.scout.rt.client.ui.form.fields.groupbox.AbstractGroupBox;
 import org.eclipse.scout.rt.client.ui.form.fields.tablefield.AbstractTableField;
 import org.eclipse.scout.rt.platform.Order;
+import org.eclipse.scout.rt.platform.exception.ProcessingException;
+import org.eclipse.scout.rt.platform.text.TEXTS;
+import org.eclipse.scout.rt.shared.services.common.code.ICodeType;
+import org.eclipse.scout.scout.shared.Icons;
+import org.eclipse.scout.scout.shared.code.ParameterTypeCodeType;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class ParameterCategoryBox extends AbstractGroupBox {
 
@@ -57,12 +69,21 @@ public class ParameterCategoryBox extends AbstractGroupBox {
         return false;
       }
 
+      @Override
+      protected Class<? extends IMenu> getConfiguredDefaultMenu() {
+        return EditParameterMenu.class;
+      }
+
       public CodeColumn getCodeColumn() {
         return getColumnSet().getColumnByClass(CodeColumn.class);
       }
 
       public NameColumn getNameColumn() {
         return getColumnSet().getColumnByClass(NameColumn.class);
+      }
+
+      public TypeColumn getTypeColumn() {
+        return getColumnSet().getColumnByClass(TypeColumn.class);
       }
 
       public ValueColumn getValueColumn() {
@@ -85,6 +106,14 @@ public class ParameterCategoryBox extends AbstractGroupBox {
       public class LabelColumn extends AbstractStringColumn {
       }
 
+      @Order(2000)
+      public class TypeColumn extends AbstractSmartColumn<Long> {
+        @Override
+        protected Class<? extends ICodeType<?, Long>> getConfiguredCodeType() {
+          return ParameterTypeCodeType.class;
+        }
+      }
+
       @Order(2500)
       public class CodeColumn extends AbstractLongColumn {
         @Override
@@ -95,6 +124,36 @@ public class ParameterCategoryBox extends AbstractGroupBox {
 
       @Order(3000)
       public class ValueColumn extends AbstractStringColumn {
+      }
+
+      public class EditParameterMenu extends AbstractMenu {
+
+        @Override
+        protected String getConfiguredText() {
+          return TEXTS.get("EditParameter_");
+        }
+
+        @Override
+        protected String getConfiguredIconId() {
+          return Icons.DiagramArea;
+        }
+
+        @Override
+        protected Set<? extends IMenuType> getConfiguredMenuTypes() {
+          return new HashSet<IMenuType>();
+        }
+
+        @Override
+        protected void execAction() throws ProcessingException {
+          ParameterForm form = new ParameterForm();
+          form.setParameterName(getTable().getNameColumn().getSelectedValue());
+          form.setParameterTypeUid(getTable().getTypeColumn().getSelectedValue());
+          form.setParameterLabel(getTable().getLabelColumn().getSelectedValue());
+          form.setParameterCode(getTable().getCodeColumn().getSelectedValue());
+          form.startModify();
+          form.waitFor();
+          m_parameterForm.loadData(m_parameterForm.getSearchField().getValue());
+        }
       }
     }
   }

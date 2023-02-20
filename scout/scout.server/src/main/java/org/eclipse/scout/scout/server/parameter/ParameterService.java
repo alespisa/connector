@@ -2,25 +2,41 @@ package org.eclipse.scout.scout.server.parameter;
 
 import org.eclipse.scout.rt.platform.BEANS;
 import org.eclipse.scout.rt.platform.exception.ProcessingException;
-import org.eclipse.scout.rt.platform.exception.VetoException;
-import org.eclipse.scout.rt.platform.text.TEXTS;
-import org.eclipse.scout.rt.security.ACCESS;
 import org.eclipse.scout.rt.shared.services.common.code.ICode;
 import org.eclipse.scout.rt.shared.services.common.code.ICodeType;
+import org.eclipse.scout.scout.server.DatabaseUtility;
+import org.eclipse.scout.scout.server.sql.TableAliases;
 import org.eclipse.scout.scout.server.sql.qdl.QDL;
-import org.eclipse.scout.scout.shared.parameter.IParameterService;
-import org.eclipse.scout.scout.shared.parameter.ParameterFormData;
+import org.eclipse.scout.scout.shared.code.AbstractSQLCodeType;
+import org.eclipse.scout.scout.shared.code.CodeUtility;
+import org.eclipse.scout.scout.shared.entities.Parameter;
+import org.eclipse.scout.scout.shared.entities.Uc;
+import org.eclipse.scout.scout.shared.entities.UcText;
+import org.eclipse.scout.scout.shared.entities.common.LanguageCodeType;
+import org.eclipse.scout.scout.shared.entities.common.WotanUtility;
+import org.eclipse.scout.scout.shared.parameter.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import static org.eclipse.scout.scout.server.sql.qdl.QDL.*;
+import static org.eclipse.scout.scout.shared.entities.common.WotanUtility.toPrimitiveByteArray;
 
 public class ParameterService implements IParameterService {
 
   @Override
-  public ParameterFormData store(ParameterFormData formData) {
-    return null;
+  public ParameterFormData store(ParameterFormData formData) throws ProcessingException {
+    @SuppressWarnings("unchecked")
+    IParameter<Object> parameter = (IParameter<Object>) getParameter(formData.getParameterName());
+
+    if (parameter != null) {
+      parameter.setValue(formData.getValue());
+    }
+    return formData;
   }
 
   private static final Logger LOG = LoggerFactory.getLogger(ParameterService.class);
@@ -45,27 +61,10 @@ public class ParameterService implements IParameterService {
 
   @Override
   public ParameterFormData load(ParameterFormData formData) throws ProcessingException {
-    if (!ACCESS.check(new ReadParameterPermission())) {
-      throw new VetoException(TEXTS.get("AuthorizationFailed"));
-    }
     IParameter<?> parameter = getParameter(formData.getParameterName());
     if (parameter != null) {
       formData.setValue(parameter.getValue());
       formData.setParameterTypeUid(parameter.getTypeUid());
-    }
-    return formData;
-  }
-
-  @Override
-  public ParameterFormData store(ParameterFormData formData) throws ProcessingException {
-    if (!ACCESS.check(new UpdateParameterPermission())) {
-      throw new VetoException(TEXTS.get("AuthorizationFailed"));
-    }
-    @SuppressWarnings("unchecked")
-    IParameter<Object> parameter = (IParameter<Object>) getParameter(formData.getParameterName());
-
-    if (parameter != null) {
-      parameter.setValue(formData.getValue());
     }
     return formData;
   }
@@ -125,7 +124,7 @@ public class ParameterService implements IParameterService {
         .executeUpdate();
     }
     else {
-      Long parameterNr = DataBaseUtility.createParameterNr();
+      Long parameterNr = DatabaseUtility.createParameterNr();
 
       QDL.insertInto(p)
         .columns(p.parameterNr(), p.parameterNo(), p.parameterName(), p.parameterTypeUid(), p.stringValue())
@@ -166,7 +165,7 @@ public class ParameterService implements IParameterService {
       LOG.error(msg);
       throw new ProcessingException(msg);
     }
-    Long languageUid = GermanCode.ID;
+    Long languageUid = LanguageCodeType.GermanCode.ID;
 
     //update code value
     QDL.update(uc)
@@ -182,7 +181,7 @@ public class ParameterService implements IParameterService {
         eq(ucText.languageUid(), languageUid))
       .executeUpdate();
 
-    ((AbstractSqlCodeType) BEANS.get(codeTypeClass)).reloadCodes();
+    ((AbstractSQLCodeType) BEANS.get(codeTypeClass)).reloadCodes();
   }
 
   @Override
@@ -216,7 +215,7 @@ public class ParameterService implements IParameterService {
         .executeUpdate();
     }
     else {
-      Long parameterNr = DataBaseUtility.createParameterNr();
+      Long parameterNr = DatabaseUtility.createParameterNr();
 
       QDL.insertInto(p)
         .columns(p.parameterNr(), p.parameterNo(), p.parameterName(), p.parameterTypeUid(), p.numberValue())
@@ -251,7 +250,7 @@ public class ParameterService implements IParameterService {
         .executeUpdate();
     }
     else {
-      Long parameterNr = DataBaseUtility.createParameterNr();
+      Long parameterNr = DatabaseUtility.createParameterNr();
 
       QDL.insertInto(p)
         .columns(p.parameterNr(), p.parameterNo(), p.parameterName(), p.parameterTypeUid(), p.booleanValue())
@@ -283,7 +282,7 @@ public class ParameterService implements IParameterService {
         .where(eq(p.parameterName(), bindString(name))).executeUpdate();
     }
     else {
-      Long parameterNr = DataBaseUtility.createParameterNr();
+      Long parameterNr = DatabaseUtility.createParameterNr();
 
       QDL.insertInto(p)
         .columns(p.parameterNr(), p.parameterNo(), p.parameterName(), p.parameterTypeUid(), p.binaryValue())
@@ -323,7 +322,7 @@ public class ParameterService implements IParameterService {
       QDL.update(p).set(assign(p.smartValue(), bindLong(value))).where(eq(p.parameterName(), bindString(name)))
         .executeUpdate();
     } else {
-      Long parameterNr = DataBaseUtility.createParameterNr();
+      Long parameterNr = DatabaseUtility.createParameterNr();
 
       QDL.insertInto(p)
         .columns(p.parameterNr(), p.parameterNo(), p.parameterName(), p.parameterTypeUid(), p.smartValue())

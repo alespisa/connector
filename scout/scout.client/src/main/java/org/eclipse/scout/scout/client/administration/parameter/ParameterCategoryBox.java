@@ -16,6 +16,7 @@ import org.eclipse.scout.rt.shared.services.common.code.ICodeType;
 import org.eclipse.scout.scout.client.parameter.ParameterForm;
 import org.eclipse.scout.scout.client.parameter.TileParameterForm;
 import org.eclipse.scout.scout.shared.Icons;
+import org.eclipse.scout.scout.shared.code.ParameterTypeCodeType;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -138,7 +139,7 @@ public class ParameterCategoryBox extends AbstractGroupBox {
 
         @Override
         protected String getConfiguredIconId() {
-          return Icons.Edit;
+          return Icons.Parameter;
         }
 
         @Override

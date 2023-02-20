@@ -7,6 +7,7 @@ import org.eclipse.scout.rt.client.ui.form.AbstractFormHandler;
 import org.eclipse.scout.rt.client.ui.form.fields.bigdecimalfield.AbstractBigDecimalField;
 import org.eclipse.scout.rt.client.ui.form.fields.booleanfield.AbstractBooleanField;
 import org.eclipse.scout.rt.client.ui.form.fields.button.AbstractCancelButton;
+import org.eclipse.scout.rt.client.ui.form.fields.button.AbstractOkButton;
 import org.eclipse.scout.rt.client.ui.form.fields.groupbox.AbstractGroupBox;
 import org.eclipse.scout.rt.client.ui.form.fields.integerfield.AbstractIntegerField;
 import org.eclipse.scout.rt.client.ui.form.fields.smartfield.AbstractSmartField;
@@ -18,14 +19,17 @@ import org.eclipse.scout.rt.platform.exception.ProcessingException;
 import org.eclipse.scout.rt.platform.text.TEXTS;
 import org.eclipse.scout.rt.shared.data.form.AbstractFormData;
 import org.eclipse.scout.rt.shared.services.common.code.ICodeType;
+import org.eclipse.scout.scout.client.parameter.ParameterForm.MainBox.GroupBox.IntegerValueField;
+import org.eclipse.scout.scout.shared.code.ParameterTypeCodeType;
 import org.eclipse.scout.scout.shared.parameter.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
-@FormData(value = ParameterFormData.class ,sdkCommand = FormData.SdkCommand.CREATE)
+@FormData(value = ParameterFormData.class, sdkCommand = FormData.SdkCommand.CREATE)
 public class ParameterForm extends AbstractForm {
 
   private static final Logger LOG = LoggerFactory.getLogger(ParameterForm.class);
@@ -110,44 +114,44 @@ public class ParameterForm extends AbstractForm {
     startInternal(new ModifyHandler());
   }
 
-  public CancelButton getCancelButton() {
-    return getFieldByClass(CancelButton.class);
+  public MainBox.CancelButton getCancelButton() {
+    return getFieldByClass(MainBox.CancelButton.class);
   }
 
   public MainBox getMainBox() {
     return getFieldByClass(MainBox.class);
   }
 
-  public OkButton getOkButton() {
-    return getFieldByClass(OkButton.class);
+  public MainBox.OkButton getOkButton() {
+    return getFieldByClass(MainBox.OkButton.class);
   }
 
-  public StringValueField getStringValueField() {
-    return getFieldByClass(StringValueField.class);
+  public MainBox.GroupBox.StringValueField getStringValueField() {
+    return getFieldByClass(MainBox.GroupBox.StringValueField.class);
   }
 
-  public SmartValueField getSmartValueField() {
-    return getFieldByClass(SmartValueField.class);
+  public MainBox.GroupBox.SmartValueField getSmartValueField() {
+    return getFieldByClass(MainBox.GroupBox.SmartValueField.class);
   }
 
-  public PasswordField getPasswordField() {
-    return getFieldByClass(PasswordField.class);
+  public MainBox.GroupBox.PasswordField getPasswordField() {
+    return getFieldByClass(MainBox.GroupBox.PasswordField.class);
   }
 
-  public ShowPasswordField getShowPasswordField() {
-    return getFieldByClass(ShowPasswordField.class);
+  public MainBox.GroupBox.ShowPasswordField getShowPasswordField() {
+    return getFieldByClass(MainBox.GroupBox.ShowPasswordField.class);
   }
 
-  public NumberValueField getNumberValueField() {
-    return getFieldByClass(NumberValueField.class);
+  public MainBox.GroupBox.NumberValueField getNumberValueField() {
+    return getFieldByClass(MainBox.GroupBox.NumberValueField.class);
   }
 
   public IntegerValueField getIntegerValueField() {
     return getFieldByClass(IntegerValueField.class);
   }
 
-  public BooleanValueField getBooleanValueField() {
-    return getFieldByClass(BooleanValueField.class);
+  public MainBox.GroupBox.BooleanValueField getBooleanValueField() {
+    return getFieldByClass(MainBox.GroupBox.BooleanValueField.class);
   }
 
   @Override
@@ -430,7 +434,7 @@ public class ParameterForm extends AbstractForm {
           getPasswordField().setInputMasked(!getValue());
         }
 
-        @Override
+/*        @Override
         protected Boolean execValidateValue(Boolean rawValue) {
           if(rawValue && !m_passwordUnlocked) {
             ConfirmUserPasswordForm form = new ConfirmUserPasswordForm();
@@ -440,13 +444,13 @@ public class ParameterForm extends AbstractForm {
             return m_passwordUnlocked;
           }
           return rawValue;
-        }
+        }*/
       }
     }
 
     @Order(20.0)
     @ClassId("3a9f4ae7-d66f-4274-b310-b15e65192107")
-    public class OkButton extends AbstractBsiVetOkButton {
+    public class OkButton extends AbstractOkButton {
     }
 
     @Order(30.0)

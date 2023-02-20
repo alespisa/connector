@@ -2,10 +2,12 @@ package org.eclipse.scout.scout.shared.parameter;
 
 import org.eclipse.scout.rt.platform.exception.ProcessingException;
 import org.eclipse.scout.rt.platform.service.IService;
+import org.eclipse.scout.rt.shared.TunnelToServer;
 
+import java.util.List;
+
+@TunnelToServer
 public interface IParameterService extends IService {
-
-  ParameterFormData store(ParameterFormData formData);
 
   boolean parameterExists(final String parameterName) throws ProcessingException;
 

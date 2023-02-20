@@ -1,9 +1,12 @@
 package org.eclipse.scout.scout.shared.parameter;
 
+import org.eclipse.scout.rt.platform.classid.ClassId;
 import org.eclipse.scout.rt.shared.data.form.AbstractFormData;
 import org.eclipse.scout.rt.shared.data.form.fields.AbstractValueFieldData;
+import org.eclipse.scout.rt.shared.data.form.properties.AbstractPropertyData;
 
 import javax.annotation.Generated;
+import java.math.BigDecimal;
 
 /**
  * <b>NOTE:</b><br>
@@ -13,11 +16,151 @@ import javax.annotation.Generated;
 public class ParameterFormData extends AbstractFormData {
     private static final long serialVersionUID = 1L;
 
-    public Path getPath() {
-        return getFieldByClass(Path.class);
+    public BooleanValue getBooleanValue() {
+        return getFieldByClass(BooleanValue.class);
     }
 
-    public static class Path extends AbstractValueFieldData<String> {
+    public IntegerValue getIntegerValue() {
+        return getFieldByClass(IntegerValue.class);
+    }
+
+    public NumberValue getNumberValue() {
+        return getFieldByClass(NumberValue.class);
+    }
+
+    /**
+     * access method for property ParameterLabel.
+     */
+    public String getParameterLabel() {
+        return getParameterLabelProperty().getValue();
+    }
+
+    /**
+     * access method for property ParameterLabel.
+     */
+    public void setParameterLabel(String parameterLabel) {
+        getParameterLabelProperty().setValue(parameterLabel);
+    }
+
+    public ParameterLabelProperty getParameterLabelProperty() {
+        return getPropertyByClass(ParameterLabelProperty.class);
+    }
+
+    /**
+     * access method for property ParameterName.
+     */
+    public String getParameterName() {
+        return getParameterNameProperty().getValue();
+    }
+
+    /**
+     * access method for property ParameterName.
+     */
+    public void setParameterName(String parameterName) {
+        getParameterNameProperty().setValue(parameterName);
+    }
+
+    public ParameterNameProperty getParameterNameProperty() {
+        return getPropertyByClass(ParameterNameProperty.class);
+    }
+
+    /**
+     * access method for property ParameterTypeUid.
+     */
+    public Long getParameterTypeUid() {
+        return getParameterTypeUidProperty().getValue();
+    }
+
+    /**
+     * access method for property ParameterTypeUid.
+     */
+    public void setParameterTypeUid(Long parameterTypeUid) {
+        getParameterTypeUidProperty().setValue(parameterTypeUid);
+    }
+
+    public ParameterTypeUidProperty getParameterTypeUidProperty() {
+        return getPropertyByClass(ParameterTypeUidProperty.class);
+    }
+
+    public Password getPassword() {
+        return getFieldByClass(Password.class);
+    }
+
+    public ShowPassword getShowPassword() {
+        return getFieldByClass(ShowPassword.class);
+    }
+
+    public SmartValue getSmartValue() {
+        return getFieldByClass(SmartValue.class);
+    }
+
+    public StringValue getStringValue() {
+        return getFieldByClass(StringValue.class);
+    }
+
+    /**
+     * access method for property Value.
+     */
+    public Object getValue() {
+        return getValueProperty().getValue();
+    }
+
+    /**
+     * access method for property Value.
+     */
+    public void setValue(Object value) {
+        getValueProperty().setValue(value);
+    }
+
+    public ValueProperty getValueProperty() {
+        return getPropertyByClass(ValueProperty.class);
+    }
+
+    @ClassId("60c3bb08-7adb-48f3-a9dc-c56709a2919c-formdata")
+    public static class BooleanValue extends AbstractValueFieldData<Boolean> {
+        private static final long serialVersionUID = 1L;
+    }
+
+    @ClassId("6a42de8a-98d2-41a4-93ff-5ddac08d27e0-formdata")
+    public static class IntegerValue extends AbstractValueFieldData<Integer> {
+        private static final long serialVersionUID = 1L;
+    }
+
+    @ClassId("120b2c44-48bf-4fb0-8443-063ec5b1d844-formdata")
+    public static class NumberValue extends AbstractValueFieldData<BigDecimal> {
+        private static final long serialVersionUID = 1L;
+    }
+
+    public static class ParameterLabelProperty extends AbstractPropertyData<String> {
+        private static final long serialVersionUID = 1L;
+    }
+
+    public static class ParameterNameProperty extends AbstractPropertyData<String> {
+        private static final long serialVersionUID = 1L;
+    }
+
+    public static class ParameterTypeUidProperty extends AbstractPropertyData<Long> {
+        private static final long serialVersionUID = 1L;
+    }
+
+    public static class Password extends AbstractValueFieldData<String> {
+        private static final long serialVersionUID = 1L;
+    }
+
+    public static class ShowPassword extends AbstractValueFieldData<Boolean> {
+        private static final long serialVersionUID = 1L;
+    }
+
+    public static class SmartValue extends AbstractValueFieldData<Long> {
+        private static final long serialVersionUID = 1L;
+    }
+
+    @ClassId("f06e1dfe-2f47-4840-b6ba-bd0eddacbb5d-formdata")
+    public static class StringValue extends AbstractValueFieldData<String> {
+        private static final long serialVersionUID = 1L;
+    }
+
+    public static class ValueProperty extends AbstractPropertyData<Object> {
         private static final long serialVersionUID = 1L;
     }
 }

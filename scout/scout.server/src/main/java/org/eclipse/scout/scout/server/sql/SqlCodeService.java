@@ -7,9 +7,16 @@ import org.eclipse.scout.rt.shared.services.common.code.CodeRow;
 import org.eclipse.scout.rt.shared.services.common.code.ICodeRow;
 import org.eclipse.scout.scout.server.sql.qdl.QDL;
 import org.eclipse.scout.scout.shared.code.ISqlCodeService;
+import org.eclipse.scout.scout.shared.code.StatusCodeType;
+import org.eclipse.scout.scout.shared.entities.Uc;
+import org.eclipse.scout.scout.shared.entities.UcText;
+import org.eclipse.scout.scout.shared.entities.common.LanguageCodeType;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.eclipse.scout.scout.server.sql.qdl.QDL.bindLong;
+import static org.eclipse.scout.scout.server.sql.qdl.QDL.eq;
 
 public class SqlCodeService implements ISqlCodeService {
 
@@ -52,7 +59,7 @@ public class SqlCodeService implements ISqlCodeService {
     for (Object[] objects : select) {
       Long uid = (Long) objects[0];
       String text = (String) objects[1];
-      boolean active = ActiveCode.ID.equals(objects[2]);
+      boolean active = StatusCodeType.ActiveCode.ID.equals(objects[2]);
       Long parentUid = (Long) objects[3];
       if (parentUid != null && parentUid.equals(0l)) {
         parentUid = null;

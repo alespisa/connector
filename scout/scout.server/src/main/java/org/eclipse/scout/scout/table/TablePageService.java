@@ -4,7 +4,16 @@ import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
+import org.eclipse.scout.rt.platform.BEANS;
+import org.eclipse.scout.rt.platform.exception.ProcessingException;
+import org.eclipse.scout.rt.platform.text.TEXTS;
+import org.eclipse.scout.rt.shared.services.common.code.ICode;
 import org.eclipse.scout.scout.server.parameter.AbstractTablePageService;
+import org.eclipse.scout.scout.shared.code.ParameterTypeCodeType;
+import org.eclipse.scout.scout.shared.parameter.AbstractSmartParameter;
+import org.eclipse.scout.scout.shared.parameter.IParameter;
+import org.eclipse.scout.scout.shared.parameter.PARAMETERS;
+import org.eclipse.scout.scout.shared.parameter.ParameterCategoryCodeType;
 import org.eclipse.scout.scout.shared.table.ITablePageService;
 import org.eclipse.scout.scout.shared.table.TableTablePageData;
 import org.slf4j.LoggerFactory;
@@ -15,7 +24,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Properties;
+import java.util.*;
 
 public class TablePageService extends AbstractTablePageService implements ITablePageService {
 
@@ -90,6 +99,72 @@ public class TablePageService extends AbstractTablePageService implements ITable
   @Override
   public long getMaxRowCount() {
     return setMaxRowCount();
+  }
+
+  @Override
+  public Map<String, Object[][]> getParameterPageData(String searchTerm) throws ProcessingException {
+    if(searchTerm == null) {
+      searchTerm = "";
+    }
+    searchTerm = searchTerm.toLowerCase();
+
+    Map<String, Object[][]> returnValue = new HashMap<String, Object[][]>();
+
+    Map<String, List<IParameter<?>>> categoryMap = new HashMap<String, List<IParameter<?>>>();
+
+    List<IParameter<?>> parameters = PARAMETERS.getAll();
+
+    for(ICode<Long> code : BEANS.get(ParameterCategoryCodeType.class).getCodes()) {
+      List<IParameter<?>> list = new ArrayList<IParameter<?>>();
+      for(IParameter<?> param : parameters) {
+        if(param.getCategoryUid().equals(code.getId()) && param.isVisible() && param.hasVisiblePermission() &&
+          (param.getLabel().toLowerCase().contains(searchTerm))) {
+          list.add(param);
+        }
+      }
+      if(list.size() > 0) {
+        categoryMap.put(code.getText(), list);
+      }
+    }
+
+    for(Map.Entry<String, List<IParameter<?>>> entry : categoryMap.entrySet()) {
+
+      List<Object[]> values = new ArrayList<Object[]>();
+
+      List<IParameter<?>> params = entry.getValue();
+
+      for (IParameter<?> p : params) {
+
+        Object[] row = new Object[5];
+        row[0] = p.getName();
+        row[1] = p.getLabel();
+        row[2] = p.getTypeUid();
+        row[4] = p.getParameterCode();
+        if (p.getValue() != null) {
+          if (ParameterTypeCodeType.BooleanCode.ID.equals(p.getTypeUid())) {
+            row[3] = ((Boolean) p.getValue()).booleanValue() ? TEXTS.get("Yes") : TEXTS.get("No");
+          }
+          else if(ParameterTypeCodeType.SmartCode.ID.equals(p.getTypeUid())) {
+            row[3] = BEANS.get(((AbstractSmartParameter) p).getConfiguredCodeType()).getCode((Long) p.getValue()).getText();
+          }
+          else if(ParameterTypeCodeType.PasswordCode.ID.equals(p.getTypeUid())) {
+            row[3] = p.getValue().toString().replaceAll(".", "•");
+          }
+          else {
+            row[3] = p.getValue().toString();
+          }
+        }
+        else {
+          row[3] = "";
+        }
+
+        values.add(row);
+      }
+
+      returnValue.put(entry.getKey(), values.toArray(new Object[values.size()][]));
+    }
+
+    return returnValue;
   }
 
   private static boolean isRowCountOverMaxRowCount(TableTablePageData pageData){
